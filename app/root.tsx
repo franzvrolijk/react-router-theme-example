@@ -4,11 +4,13 @@ import { useTheme } from "react-router-theme";
 import { ThemeContext } from "./themeContext";
 export { loader, action } from "react-router-theme";
 
+const defaultTheme = "system";
+
 export function Layout({ children }: { children: React.ReactNode }) {
   const loaderData = useLoaderData() as { theme: string };
   const fetcher = useFetcher();
 
-  const [theme, setTheme] = useTheme(loaderData, fetcher);
+  const [theme, setTheme] = useTheme(loaderData, fetcher, defaultTheme);
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
