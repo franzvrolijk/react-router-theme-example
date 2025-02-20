@@ -1,15 +1,52 @@
+/* Three-way (dark/light/system) Tailwind CSS configuration */
+
 @import "tailwindcss";
 
-@theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+/* Define color variables for each theme */
+:root {
+  --light-background: hsl(0 0% 100%);
+  --light-foreground: hsl(20 14.3% 4.1%);
+
+  --dark-background: hsl(20 14.3% 4.1%);
+  --dark-foreground: hsl(60 9.1% 97.8%);
+}
+
+/* Define themes with an attribute selector by referencing the color variables */
+[data-theme="light"] {
+  --background: var(--light-background);
+  --foreground: var(--light-foreground);
+}
+
+[data-theme="dark"] {
+  --background: var(--dark-background);
+  --foreground: var(--dark-foreground);
+}
+
+/* Define a separate theme that references either dark or light color variables depending on media query */
+[data-theme="system"] {
+  @media (prefers-color-scheme: light) {
+    /* Copy and paste light theme */
+    --background: var(--light-background);
+    --foreground: var(--light-foreground);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    /* Copy and paste dark theme */
+    --background: var(--dark-background);
+    --foreground: var(--dark-foreground);
+  }
+}
+
+/* Custom tailwind colors:
+ * Add custom tailwind colors referencing your theme variables.
+ * This will allow you to use e.g. 'bg-background' or 'text-foreground' and have it change with your chosen theme.
+ */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
 }
 
 html,
 body {
-  @apply bg-white dark:bg-gray-950;
-
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
-  }
+  height: 100%;
 }
